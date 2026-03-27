@@ -1,0 +1,118 @@
+<!--/* テンプレート参考URL：https://www.jungleocean.com/programming/190318form-technic */-->
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+  <title>品目詳細</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/userDetail.css">
+  <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet">
+  <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/user.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <!-- ヘッダー部分（画面上部）-->
+    <header>
+      <!-- ヘッダーロゴ -->
+      <h1 id="logo"><img src="/image/logo.png" alt="株式会社エースウォード"></h1>
+
+      <!-- スマホ用メニュー -->
+      <div id="menubar_hdr">
+        <span></span><span></span><span></span>
+      </div>
+    </header>
+
+    <!-- メイン部分 -->
+    <main>
+      <section>
+        <h2>品目詳細画面</h2>
+        <div class="col-sm-8 col-sm-offset-2 error" th:unless="${#lists.isEmpty(errorMessages)}">
+          <p th:text="${errorMessage}" th:each="errorMessage : ${errorMessages}"></p>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
+            <label style="margin: 0;"></label>
+            <form th:action="@{/item/delete/{id}(id=${form.itemId})}" method="post" style="margin: 0;"
+              onsubmit="return confirm('本当に削除しますか？')">
+              <button type="submit" class="btn-delete-final">この品目を削除</button>
+            </form>
+          </div>
+
+          <div class="form-group">
+            <label>品目</label>
+            <p class="form-control" th:text="${form.item}" />
+          </div>
+
+          <div class="form-group">
+            <label>品目コード</label>
+            <p class="form-control" th:text="${form.itemCode}" />
+          </div>
+
+          <div class="form-group">
+            <label>単価</label>
+            <p class="form-control" th:text="${form.unitPrice}" />
+          </div>
+
+          <div class="form-group">
+            <label>数量</label>
+            <p class="form-control" th:text="${form.quantity}" />
+          </div>
+
+          <div class="form-group">
+            <label>単位</label>
+            <p class="form-control" th:text="${form.unit}" />
+          </div>
+
+          <div class="form-group">
+            <label>品目詳細</label>
+            <p class="form-control" th:text="${form.itemDetail}" />
+          </div>
+
+          <div class="form-group">
+            <label>消費税</label>
+            <p class="form-control" th:text="${form.salesTax}" />
+          </div>
+
+          <div class="form-group">
+            <label>源泉徴収税</label>
+            <p class="form-control" th:text="${form.withholdingTax == 1 ? 'あり' : 'なし'}"></p>
+          </div>
+
+          <div class="text-center">
+            <a th:href="@{'/item/update/' + ${form.itemId}}" class="btn btn-primary btn-lg">更新画面へ</a>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- 左メニュー部分 -->
+    <div id="menubar">
+      <nav>
+        <ul>
+          <li><a th:href="@{/}">HOME</a></li>
+          <li><a th:href="@{/user/register}">ユーザ登録</a></li>
+          <li><a th:href="@{/user/list}">ユーザ一覧</a></li>
+          <li><a th:href="@{/item/register}">品目登録</a></li>
+          <li><a th:href="@{/item/list}">品目一覧</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- フッター部分（画面下部） -->
+    <footer>
+      <small>Copyright&copy; <a href="https://ace-ward.com/">2018 ACEWARD Co.,Ltd.</a> All Rights Reserved.</small>
+      <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+    </footer>
+  </div>
+</body>
+
+</html>

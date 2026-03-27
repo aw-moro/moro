@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.aceward.usermanagement.dao.mapper.ItemDetailMapper">
+
+  <select id="countByItemSearchDto" parameterType="com.aceward.usermanagement.dao.dto.ItemSearchDto" resultType="java.lang.Integer">
+    select
+      count(*)
+    from
+      item_mst d
+
+    <where>
+      and delete_flg = '0'
+      <if test="itemCode != null and itemCode != ''">
+        and d.item_code like concat('%', #{itemCode}, '%')
+      </if>
+      <if test="item != null and item != ''">
+        and d.item like concat('%', #{item}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="findByItemSearchDto" parameterType="com.aceward.usermanagement.dao.dto.ItemSearchDto" resultType="com.aceward.usermanagement.dao.dto.ItemListDto">
+    select
+      item_id
+      , item
+      , item_code
+      , unit_price
+      , quantity
+      , unit
+      , item_detail
+      , sales_tax
+      , withholding_tax
+    from
+      item_mst d
+
+    <where>
+      and delete_flg = '0'
+      <if test="itemCode != null and itemCode != ''">
+        and d.item_code like concat('%', #{itemCode}, '%')
+      </if>
+      <if test="item != null and item != ''">
+        and d.item like concat('%', #{item}, '%')
+      </if>
+    </where>
+
+      order by
+      d.item_code
+    <if test="size != null and page != null">
+      offset ${page * size}
+      limit ${size}
+      </if>
+
+  </select>
+
+    <update id="deleteById">
+      UPDATE item_mst
+      SET delete_flg = '1',
+        updated_at = CURRENT_TIMESTAMP
+      WHERE item_id = #{itemId}::uuid
+    </update>
+
+</mapper>
