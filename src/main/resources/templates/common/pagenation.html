@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ページャ機能</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/pagenation.css">
+</head>
+
+<!-- ページャ共通 -->
+<body>
+  <div th:fragment="pagenation (url, page, ph)">
+    <ul class="pagination">
+      <li th:attr="style=${ph.hiddenPrev} ? 'visibility:hidden'">
+        <a class="js-pagenation" th:href="@{${url}(page=${page.number - 1},size=${page.size})}">&#171;</a>
+      </li>
+    </ul>
+
+    <ul class="pagination">
+      <li th:class="${ph.activePage1} ? 'active'">
+        <a class="js-pagenation" th:href="@{${url}(page=${ph.page1PageValue},size=${page.size})}" th:text="${ph.page1PageValue + 1}">1</a>
+      </li>
+      <li th:class="${ph.activePage2} ? 'active'" th:unless="${ph.hiddenPage2}">
+        <a class="js-pagenation" th:href="@{${url}(page=${ph.page1PageValue + 1},size=${page.size})}" th:text="${ph.page1PageValue + 2}">2</a>
+      </li>
+      <li th:class="${ph.activePage3} ? 'active'" th:unless="${ph.hiddenPage3}">
+        <a class="js-pagenation" th:href="@{${url}(page=${ph.page1PageValue + 2},size=${page.size})}" th:text="${ph.page1PageValue + 3}">3</a>
+      </li>
+      <li th:class="${ph.activePage4} ? 'active'" th:unless="${ph.hiddenPage4}">
+        <a class="js-pagenation" th:href="@{${url}(page=${ph.page1PageValue + 3},size=${page.size})}" th:text="${ph.page1PageValue + 4}">4</a>
+      </li>
+      <li th:class="${ph.activePage5} ? 'active'" th:unless="${ph.hiddenPage5}">
+        <a class="js-pagenation" th:href="@{${url}(page=${ph.page1PageValue + 4},size=${page.size})}" th:text="${ph.page1PageValue + 5}">4</a>
+      </li>
+    </ul>
+
+    <ul class="pagination">
+      <li th:attr="style=${ph.hiddenNext} ? 'visibility : hidden'"><a class="js-pagenation" th:href="@{${url}(page=${page.number + 1}, size=${page.size})}">&#187;</a></li>
+    </ul>
+  </div>
+
+</body>
+</html>

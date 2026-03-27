@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.aceward.usermanagement.dao.mapper.UserDetailMapper">
+
+  <select id="countByUserSearchDto" parameterType="com.aceward.usermanagement.dao.dto.UserSearchDto" resultType="java.lang.Integer">
+    select
+      count(*)
+    from
+      user_details d
+      join users u
+        on d.user_id = u.id
+    <where>
+      <if test="userName != null and userName != ''">
+        and d.user_name like concat('%', #{userName}, '%')
+      </if>
+      <if test="mailaddress != null and mailaddress != ''">
+        and d.mailaddress like concat('%', #{mailaddress}, '%')
+      </if>
+      <if test="prefCd != null and prefCd != ''">
+        and d.pref_cd = #{prefCd}
+      </if>
+      <if test="gender != null and gender != ''">
+        and d.gender = ${@java.lang.Integer@valueOf(gender)}
+      </if>
+      <if test="additions != null">
+        and exists (
+          select
+            *
+          from
+            user_additions
+          where
+            user_id = u.id
+            <foreach item="addition" collection="additions" open="and addition in (" separator="," close=")" >
+              #{addition}
+            </foreach>
+        )
+      </if>
+    </where>
+  </select>
+
+  <select id="findByUserSearchDto" parameterType="com.aceward.usermanagement.dao.dto.UserSearchDto" resultType="com.aceward.usermanagement.dao.dto.UserListDto">
+    select
+      u.id user_id
+      , u.user_cd
+      , d.user_name
+      , d.mailaddress
+      , d.pref_cd
+      , d.address
+      , d.gender
+      , d.note
+      , string_agg(a.addition, ',' order by a.addition) additions
+    from
+      user_details d
+      join users u
+        on d.user_id = u.id
+      left join user_additions a
+        on a.user_id = u.id
+    <where>
+      <if test="userName != null and userName != ''">
+        and d.user_name like concat('%', #{userName}, '%')
+      </if>
+      <if test="mailaddress != null and mailaddress != ''">
+        and d.mailaddress like concat('%', #{mailaddress}, '%')
+      </if>
+      <if test="prefCd != null and prefCd != ''">
+        and d.pref_cd = #{prefCd}
+      </if>
+      <if test="gender != null and gender != ''">
+        and d.gender = ${@java.lang.Integer@valueOf(gender)}
+      </if>
+      <if test="additions != null">
+        and exists (
+          select
+            *
+          from
+            user_additions
+          where
+            user_id = u.id
+            <foreach item="addition" collection="additions" open="and addition in (" separator="," close=")" >
+              #{addition}
+            </foreach>
+        )
+      </if>
+    </where>
+    group by
+      u.id
+      , u.user_cd
+      , d.user_name
+      , d.mailaddress
+      , d.pref_cd
+      , d.address
+      , d.gender
+      , d.note
+    order by
+      u.user_cd
+    <if test="size != null and page != null">
+      offset ${page * size}
+      limit ${size}
+    </if>
+  </select>
+
+</mapper>
