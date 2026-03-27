@@ -1,0 +1,137 @@
+<!--/* テンプレート参考URL：https://www.jungleocean.com/programming/190318form-technic */-->
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <title>ユーザー更新</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/userUpdate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+  <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet">
+  <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/user.js"></script>
+</head>
+<body>
+  <div id="container">
+    <!-- ヘッダー部分（画面上部）-->
+    <header>
+      <!-- ヘッダーロゴ -->
+      <h1 id="logo"><img src="/image/logo.png" alt="株式会社エースウォード"></h1>
+  
+      <!-- スマホ用メニュー -->
+      <div id="menubar_hdr">
+        <span></span><span></span><span></span>
+      </div>
+    </header>
+
+    <!-- メイン部分 -->
+    <main>
+      <section>
+        <h2>ユーザ更新画面</h2>
+        <div class="col-sm-8 col-sm-offset-2 error" th:unless="${#lists.isEmpty(errorMessages)}">
+          <p th:text="${errorMessage}" th:each="errorMessage : ${errorMessages}"></p>
+        </div>
+        <form action="#" th:action="@{/user/updateComplete}" th:object="${form}" method="post" class="row">
+          <div class="col-sm-8 col-sm-offset-2">
+            <div class="form-group">
+              <label for="userName"><span class="label label-danger">必須</span> ユーザ名</label>
+              <input type="text" class="form-control" th:field="*{userName}" placeholder="例：山田太郎" autofocus required />
+            </div>
+
+            <div class="form-group">
+              <label for="userNameKana">ユーザ名カナ</label>
+              <input type="text" class="form-control" th:field="*{userNameKana}" placeholder="例：ヤマダタロウ" autofocus />
+            </div>
+
+            <div class="form-group">
+              <label for="mailaddress"><span class="label label-danger">必須</span> メールアドレス</label>
+              <input type="email" class="form-control" th:field="*{mailaddress}" placeholder="例：text@example.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="prefCd"><span class="label label-danger">必須</span> 都道府県</label>
+              <select class="form-control" th:field="*{prefCd}">
+                <option value="">選択してください</option>
+                <option th:text="${prefCd.name}" th:value="${prefCd.code}" th:each="prefCd : ${T(com.aceward.usermanagement.enums.PrefCdEnum).values()}">県名</option>
+               </select>
+            </div>
+
+            <div class="form-group">
+              <label for="zipCd"><span class="label label-danger">必須</span> 郵便番号（ハイフンなし）</label>
+              <input type="text" class="form-control" th:field="*{zipCd}" placeholder="例：1600022" autofocus required />
+            </div>
+
+            <div class="form-group">
+              <label for="address"><span class="label label-danger">必須</span> 住所</label>
+              <input type="text" class="form-control" th:field="*{address}" placeholder="例：新宿区新宿2丁目12番13号 新宿アントレサロンビル2階" autofocus required />
+            </div>
+
+            <div class="form-group">
+              <label for="tel"><span class="label label-danger">必須</span> 電話番号（ハイフンなし）</label>
+              <input type="tel" class="form-control" th:field="*{tel}" placeholder="例：0369103204" required />
+            </div>
+
+            <div class="form-group">
+              <label for="birthday"><span class="label label-danger">必須</span> 生年月日</label>
+              <input type="text" class="form-control" th:field="*{birthday}" placeholder="例：2022/04/01" required />
+            </div>
+
+            <div class="form-group">
+              <label>性別</label>
+              <div>
+                <label class="radio-inline" th:each="gender : ${T(com.aceward.usermanagement.enums.GenderEnum).values()}">
+                  <input type="radio" name="gender" th:value="${gender.code}" th:text="${gender.name}" th:checked="${gender.code == form.gender}" />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>付加情報</label>
+              <div>
+                <label class="checkbox-inline" th:each="addition : ${T(com.aceward.usermanagement.enums.AdditionEnum).values()}">
+                  <input type="checkbox" name="additions" th:value="${addition.code}" th:text="${addition.name}" 
+                    th:checked="${!#lists.isEmpty(form.additions) && #lists.contains(form.additions, addition.code)}" />
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="note">備考</label>
+              <textarea class="form-control" th:field="*{note}"></textarea>
+            </div>
+
+            <div class="text-center">
+              <button type="button" class="btn btn-default btn-lg reset">リセット</button>
+              <button type="button" class="btn btn-primary btn-lg js_btn_update">更新</button>
+            </div>
+          </div>
+          <input type="hidden" th:field="*{userCd}" />
+          <input type="hidden" th:field="*{updatedAtMillisecond}" />
+        </form>
+      </section>
+    </main>
+
+    <!-- 左メニュー部分 -->
+    <div id="menubar">
+      <nav>
+        <ul>
+          <li><a th:href="@{/}">HOME</a></li>
+          <li><a th:href="@{/user/register}">ユーザ登録</a></li>
+          <li><a th:href="@{/user/list}">ユーザ一覧</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- フッター部分（画面下部） -->
+    <footer>
+      <small>Copyright&copy; <a href="https://ace-ward.com/">2018 ACEWARD Co.,Ltd.</a> All Rights Reserved.</small>
+      <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+    </footer>
+  </div>
+</body>
+</html>

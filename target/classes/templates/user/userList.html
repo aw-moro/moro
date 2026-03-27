@@ -1,0 +1,156 @@
+<!--/* テンプレート参考URL：https://www.jungleocean.com/programming/190318form-technic */-->
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <title>ユーザー一覧</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/userList.css">
+  <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet">
+  <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/user.js"></script>
+</head>
+<body>
+  <div id="container">
+    <!-- ヘッダー部分（画面上部）-->
+    <header>
+      <!-- ヘッダーロゴ -->
+      <h1 id="logo"><img src="/image/logo.png" alt="株式会社エースウォード"></h1>
+  
+      <!-- スマホ用メニュー -->
+      <div id="menubar_hdr">
+        <span></span><span></span><span></span>
+      </div>
+    </header>
+
+    <!-- メイン部分 -->
+    <main>
+      <section>
+        <h2>ユーザ一覧画面</h2>
+        <form action="#" th:action="@{/user/list/search}" th:object="${form}" method="get" class="row">
+          <!-- 検索条件部分 -->
+          <div class="col-sm-8 col-sm-offset-2">
+            <table class="table table-bordered search-condition">
+              <tr>
+                <th class="col-md-2 middle">ユーザ名</th>
+                <td class="col-md-4"><input type="text" class="form-control" th:field="*{userName}" /></td>
+                <th class="col-md-2 middle">メールアドレス</th>
+                <td class="col-md-4"><input type="text" class="form-control" th:field="*{mailaddress}" /></td>
+              </tr>
+              <tr>
+                <th class="middle">都道府県</th>
+                <td>
+                  <div class="row col-xs-7">
+                    <select class="form-control" th:field="*{prefCd}">
+                      <option value="">未選択</option>
+                      <option th:text="${prefCd.name}" th:value="${prefCd.code}" th:each="prefCd : ${T(com.aceward.usermanagement.enums.PrefCdEnum).values()}">県名</option>
+                     </select>
+                  </div>
+                </td>
+                <th class="middle">性別</th>
+                <td>
+                  <div class="position-gender">
+                    <label class="radio-inline">
+                      <input type="radio" name="gender" value="" th:text="なし" th:checked="${#strings.isEmpty(form.gender)}" />
+                    </label>
+                    <label class="radio-inline" th:each="gender : ${T(com.aceward.usermanagement.enums.GenderEnum).values()}">
+                      <input type="radio" name="gender" th:value="${gender.code}" th:text="${gender.name}" th:checked="${gender.code == form.gender}" />
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th class="col-md-2 middle">付加情報</th>
+                <td class="col-md-10" colspan="3">
+                  <div class="position-additions">
+                    <label class="checkbox-inline" th:each="addition : ${T(com.aceward.usermanagement.enums.AdditionEnum).values()}">
+                      <input type="checkbox" name="additions" th:value="${addition.code}" th:text="${addition.name}" 
+                        th:checked="${!#lists.isEmpty(form.additions) && #lists.contains(form.additions, addition.code)}" />
+                    </label>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <input type="hidden" name="page" value="0" />
+            <input type="hidden" name="size" value="5" />
+  
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-lg btn-search">検　索</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- 一覧部分 -->
+        <div class="col-sm-offset-1 col-sm-10 col-sm-offset-1" style="margin-top: 20px;">
+          <div class="error" th:if="${#lists.isEmpty(page.content)}">
+            <!-- 0件の場合 -->
+            <p class="error-message">検索条件に一致するユーザが見つかりませんでした。条件を変更して再検索してください。</p>
+          </div>
+
+          <div th:unless="${#lists.isEmpty(page.content)}">
+            <!-- 1件以上の場合 -->
+            <table class="table table-bordered result">
+              <thead>
+                <tr>
+                  <th class="col-md-1">ユーザ名</th>
+                  <th class="col-md-2">メールアドレス</th>
+                  <th class="col-md-3">住所</th>
+                  <th class="col-md-1">性別</th>
+                  <th class="col-md-3">付加情報</th>
+                  <th class="col-md-1">備考有無</th>
+                  <th class="col-md-1">詳細</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="user : ${page.content}">
+                  <td class="col-md-1" th:text="${user.userName}">山田太郎</td>
+                  <td class="col-md-2" th:text="${user.mailaddress}">text@example.com</td>
+                  <td class="col-md-3" th:text="${user.prefName + user.address}">東京都新宿区新宿2丁目12番13号 新宿アントレサロンビル2階</td>
+                  <td class="col-md-1" th:text="${user.genderName}">男性</td>
+                  <td class="col-md-3" th:text="${user.addition}">お得意様</td>
+                  <td class="col-md-1" th:text="${#strings.isEmpty(user.note) ? 'なし' : 'あり'}">備考有無</td>
+                  <td class="col-md-1 text-center"><a th:href="@{'/user/detail/' + ${user.userCd}}" class="btn btn-default" role="button">詳細</a></td>
+                </tr>
+              </tbody>
+            </table>
+  
+            <!-- ページャをinclude -->
+            <div class="text-center" th:include="common/pagenation :: pagenation (url='/user/list/search', page=${page}, ph=${ph})"></div>
+  
+            <!-- ページャ用に検索条件を保持するフォーム -->
+            <form id="pagenationForm" method="post" action="#" th:object="${form}">
+              <input type="hidden" th:field="*{userName}" />
+              <input type="hidden" th:field="*{mailaddress}" />
+              <input type="hidden" th:field="*{prefCd}" />
+              <input type="hidden" th:field="*{gender}" />
+              <input type="hidden" th:field="*{additions}" />
+              <input type="hidden" name="size" value="5" />
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 左メニュー部分 -->
+    <div id="menubar">
+      <nav>
+        <ul>
+          <li><a th:href="@{/}">HOME</a></li>
+          <li><a th:href="@{/user/register}">ユーザ登録</a></li>
+          <li class="current"><a th:href="@{/user/list}">ユーザ一覧</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- フッター部分（画面下部） -->
+    <footer>
+      <small>Copyright&copy; <a href="https://ace-ward.com/">2018 ACEWARD Co.,Ltd.</a> All Rights Reserved.</small>
+      <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+    </footer>
+  </div>
+</body>
+</html>

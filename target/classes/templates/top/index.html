@@ -1,0 +1,55 @@
+<!--/* テンプレート参考URL：https://www.jungleocean.com/programming/190318form-technic */-->
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <title>ユーザ管理トップ</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}" rel="stylesheet">
+  <script th:src="@{/webjars/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/js/main.js"></script>
+</head>
+<body>
+  <div id="container">
+    <!-- ヘッダー部分（画面上部）-->
+    <header>
+      <!-- ヘッダーロゴ -->
+      <h1 id="logo"><img src="/image/logo.png" alt="株式会社エースウォード"></h1>
+  
+      <!-- スマホ用メニュー -->
+      <div id="menubar_hdr">
+        <span></span><span></span><span></span>
+      </div>
+    </header>
+
+    <!-- メイン部分 -->
+    <main>
+      <section>
+        <h2>ユーザ管理</h2>
+        
+      </section>
+    </main>
+
+    <!-- 左メニュー部分 -->
+    <div id="menubar">
+      <nav>
+        <ul>
+          <li class="current"><a th:href="@{/}">HOME</a></li>
+          <li><a th:href="@{/user/register}">ユーザ登録</a></li>
+          <li><a th:href="@{/user/list}">ユーザ一覧</a></li>
+          <li><a th:href="@{/item/register}">品目登録</a></li>
+          <li><a th:href="@{/item/list}">品目一覧</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- フッター部分（画面下部） -->
+    <footer>
+      <small>Copyright&copy; <a href="https://ace-ward.com/">2018 ACEWARD Co.,Ltd.</a> All Rights Reserved.</small>
+      <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+    </footer>
+  </div>
+</body>
+</html>
