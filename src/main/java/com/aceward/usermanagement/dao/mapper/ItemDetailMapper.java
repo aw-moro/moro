@@ -32,11 +32,4 @@ public interface ItemDetailMapper {
      */
     List<ItemListDto> findByItemSearchDto(ItemSearchDto dto);
 
-    /**
-     * 指定したIDの品目の削除フラグを1にする。
-     * 
-     * @param itemId 品目ID
-     */
-    void deleteById(String itemId);
-
 }
