@@ -39,6 +39,11 @@
           <p th:text="${successMessage}" style="margin: 0;"></p>
         </div>
 
+        <div th:if="${errorMessage}" class="alert"
+          style="text-align: center; margin: 20px auto; width: 80%; padding: 15px; color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; font-weight: bold;">
+          <p th:text="${errorMessage}" style="margin: 0;"></p>
+        </div>
+
         <form action="#" th:action="@{/item/list/search}" th:object="${form}" method="get" class="row">
           <!-- 検索条件部分 -->
           <div class="col-sm-8 col-sm-offset-2">
@@ -81,6 +86,7 @@
                   <th class="col-md-1">消費税</th>
                   <th class="col-md-1">源泉徴収税</th>
                   <th class="col-md-1">詳細</th>
+                  <th class="col-md-1">削除</th>
                 </tr>
               </thead>
               <tbody>
@@ -95,6 +101,11 @@
                   <td class="col-md-1" th:text="${item.withholdingTax} ? 'あり' : 'なし'">なし</td>
                   <td class="col-md-1 text-center">
                     <a th:href="@{'/item/detail/' + ${item.itemId}}" class="btn btn-default" role="button">詳細</a>
+
+                  <td class="col-md-1 text-center">
+                    <a th:href="@{'/item/delete/' + ${item.itemId}}" class="btn btn-danger"
+                      onclick="return confirm('本当に削除しますか？');">削除</a>
+                  </td>
                   </td>
                 </tr>
               </tbody>

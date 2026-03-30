@@ -40,10 +40,8 @@
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
             <label style="margin: 0;"></label>
-            <form th:action="@{/item/delete/{id}(id=${form.itemId})}" method="post" style="margin: 0;"
-              onsubmit="return confirm('本当に削除しますか？')">
-              <button type="submit" class="btn-delete-final">この品目を削除</button>
-            </form>
+            <a th:href="@{'/item/delete/' + ${form.itemId}}" class="btn btn-danger"
+              onclick="return confirm('本当に削除しますか？');">この品目を削除</a>
           </div>
 
           <div class="form-group">

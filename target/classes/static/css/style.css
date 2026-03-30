@@ -602,23 +602,3 @@ main {
 /*　※注意！　下の閉じカッコ　}　はこのブロックに必要なので、削除しないで下さい。　*/
 
 }
-
-.btn-delete-final {
-    display: inline-block;
-    padding: 6px 16px;
-    font-size: 16px;
-    line-height: 1.3333333;
-    border-radius: 6px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    color: #ff4d4d !important;
-    cursor: pointer;
-    transition: 0.3s;
-    /* 外側の余白をゼロにする */
-    margin: 0 !important; 
-}
-
-.btn-delete-final:hover {
-    background-color: #e6e6e6;
-    border-color: #adadad;
-}

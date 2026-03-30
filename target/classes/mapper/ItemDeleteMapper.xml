@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.aceward.usermanagement.dao.mapper.ItemDeleteMapper">
+
+    <update id="deleteById">
+      UPDATE item_mst
+      SET delete_flg = '1',
+        updated_at = CURRENT_TIMESTAMP
+      WHERE item_id = #{itemId}::uuid
+    </update>
+
+</mapper>
