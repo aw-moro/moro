@@ -46,15 +46,14 @@ public class ItemDeleteController {
     public String delete(@PathVariable("id") String itemID, RedirectAttributes redirectAttributes) {
 
         try {
-            // 1. 削除実行（ここですでに消えていれば Service が例外を投げる）
+            // 削除実行（ここですでに消えていれば Service が例外を投げる）
             itemDeleteService.execute(UUID.fromString(itemID));
 
-            // ★重要：成功メッセージは「execute」の「後」に書く
-            // ここに書くことで、executeで例外が発生した瞬間、この行は飛ばされます
+            // 一覧画面に表示する「成功メッセージ」をセット
             redirectAttributes.addFlashAttribute("successMessage", "品目を削除しました。");
 
         } catch (NotFoundException e) {
-
+            // データがなかった場合などの「エラーメッセージ」をセット
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
