@@ -38,78 +38,83 @@
         </div>
 
         <div class="form-group">
-          <div class="text-right" style="margin-bottom: 5px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
+
+            <form th:action="@{/item/pdf}" method="post" style="display: inline;">
+              <input type="hidden" name="itemId" th:value="${form.itemId}" />
+              <button type="submit" class="btn btn-secondary">PDFダウンロード</button>
+            </form>
+
             <a th:href="@{'/item/delete/' + ${form.itemId}}" class="btn btn-danger"
               onclick="return confirm('本当に削除しますか？');">この品目を削除</a>
           </div>
+
+          <div class="form-group">
+            <label>品目</label>
+            <p class="form-control" th:text="${form.item}" />
+          </div>
+
+          <div class="form-group">
+            <label>品目コード</label>
+            <p class="form-control" th:text="${form.itemCode}" />
+          </div>
+
+          <div class="form-group">
+            <label>単価</label>
+            <p class="form-control" th:text="${form.unitPrice}" />
+          </div>
+
+          <div class="form-group">
+            <label>数量</label>
+            <p class="form-control" th:text="${form.quantity}" />
+          </div>
+
+          <div class="form-group">
+            <label>単位</label>
+            <p class="form-control" th:text="${form.unit}" />
+          </div>
+
+          <div class="form-group">
+            <label>品目詳細</label>
+            <p class="form-control" th:text="${form.itemDetail}" />
+          </div>
+
+          <div class="form-group">
+            <label>消費税</label>
+            <p class="form-control" th:text="${form.salesTax}" />
+          </div>
+
+          <div class="form-group">
+            <label>源泉徴収税</label>
+            <p class="form-control" th:text="${form.withholdingTax == 1 ? 'あり' : 'なし'}"></p>
+          </div>
+
+          <div class="text-center">
+            <a th:href="@{'/item/update/' + ${form.itemId}}" class="btn btn-primary btn-lg">更新画面へ</a>
+          </div>
+
         </div>
+      </section>
+    </main>
 
-        <div class="form-group">
-          <label>品目</label>
-          <p class="form-control" th:text="${form.item}" />
-        </div>
+    <!-- 左メニュー部分 -->
+    <div id="menubar">
+      <nav>
+        <ul>
+          <li><a th:href="@{/}">HOME</a></li>
+          <li><a th:href="@{/user/register}">ユーザ登録</a></li>
+          <li><a th:href="@{/user/list}">ユーザ一覧</a></li>
+          <li><a th:href="@{/item/register}">品目登録</a></li>
+          <li><a th:href="@{/item/list}">品目一覧</a></li>
+        </ul>
+      </nav>
+    </div>
 
-        <div class="form-group">
-          <label>品目コード</label>
-          <p class="form-control" th:text="${form.itemCode}" />
-        </div>
-
-        <div class="form-group">
-          <label>単価</label>
-          <p class="form-control" th:text="${form.unitPrice}" />
-        </div>
-
-        <div class="form-group">
-          <label>数量</label>
-          <p class="form-control" th:text="${form.quantity}" />
-        </div>
-
-        <div class="form-group">
-          <label>単位</label>
-          <p class="form-control" th:text="${form.unit}" />
-        </div>
-
-        <div class="form-group">
-          <label>品目詳細</label>
-          <p class="form-control" th:text="${form.itemDetail}" />
-        </div>
-
-        <div class="form-group">
-          <label>消費税</label>
-          <p class="form-control" th:text="${form.salesTax}" />
-        </div>
-
-        <div class="form-group">
-          <label>源泉徴収税</label>
-          <p class="form-control" th:text="${form.withholdingTax == 1 ? 'あり' : 'なし'}"></p>
-        </div>
-
-        <div class="text-center">
-          <a th:href="@{'/item/update/' + ${form.itemId}}" class="btn btn-primary btn-lg">更新画面へ</a>
-        </div>
-
-  </div>
-  </section>
-  </main>
-
-  <!-- 左メニュー部分 -->
-  <div id="menubar">
-    <nav>
-      <ul>
-        <li><a th:href="@{/}">HOME</a></li>
-        <li><a th:href="@{/user/register}">ユーザ登録</a></li>
-        <li><a th:href="@{/user/list}">ユーザ一覧</a></li>
-        <li><a th:href="@{/item/register}">品目登録</a></li>
-        <li><a th:href="@{/item/list}">品目一覧</a></li>
-      </ul>
-    </nav>
-  </div>
-
-  <!-- フッター部分（画面下部） -->
-  <footer>
-    <small>Copyright&copy; <a href="https://ace-ward.com/">2018 ACEWARD Co.,Ltd.</a> All Rights Reserved.</small>
-    <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
-  </footer>
+    <!-- フッター部分（画面下部） -->
+    <footer>
+      <small>Copyright&copy; <a href="https://ace-ward.com/">2018 ACEWARD Co.,Ltd.</a> All Rights Reserved.</small>
+      <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+    </footer>
   </div>
 </body>
 
