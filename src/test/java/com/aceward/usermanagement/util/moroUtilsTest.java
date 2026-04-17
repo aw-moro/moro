@@ -31,6 +31,13 @@ public class moroUtilsTest {
     }
 
     @Test
+    public void testisuserNamecheck_() {
+        val actual = ValidateUtils.isuserNamecheck("");
+
+        assertFalse(actual, "期待値が一致すること");
+    }
+
+    @Test
     public void testisuserNamecheckequal_brank() {
         val actual = ValidateUtils.isuserNamecheckequal("");
 
@@ -50,4 +57,11 @@ public class moroUtilsTest {
 
         assertEquals(actual, "UserB");
     }
+
+    @Test
+    public void testValidateUtilsConstructor() {
+        // コンストラクタを呼び出すだけのテスト
+        new ValidateUtils();
+    }
+
 }
