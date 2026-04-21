@@ -20,7 +20,7 @@ import com.aceward.usermanagement.service.db.ItemService;
 /**
  * 品目PDFコントローラ。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Controller
