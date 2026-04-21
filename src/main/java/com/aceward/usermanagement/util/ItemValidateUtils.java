@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 品目バリデーション共通ユーティリティー。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 public class ItemValidateUtils {

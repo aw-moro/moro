@@ -22,7 +22,7 @@ import com.aceward.usermanagement.service.ItemDetailViewService;
 /**
  * 品目詳細画面コントローラ。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Controller
