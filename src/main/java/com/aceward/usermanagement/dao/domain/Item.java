@@ -18,7 +18,7 @@ import lombok.Data;
 /**
  * item_mst テーブルの domain クラス。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Data

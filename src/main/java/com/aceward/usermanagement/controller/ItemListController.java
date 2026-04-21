@@ -17,7 +17,7 @@ import com.aceward.usermanagement.service.ItemLisrSearchService;
 /**
  * 品目一覧画面コントローラ。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Controller

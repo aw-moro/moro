@@ -20,7 +20,7 @@ import com.aceward.usermanagement.service.ItemUpdateViewService;
 /**
  * 品目更新画面コントローラ。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Controller

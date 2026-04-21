@@ -9,7 +9,7 @@ import com.aceward.usermanagement.dao.domain.Item;
 /**
  * item_mst テーブルの Repository クラス。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Repository

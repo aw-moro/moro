@@ -16,7 +16,7 @@ import com.aceward.usermanagement.service.ItemRegisterValidateService;
 /**
  * 品目登録画面コントローラ。
  * 
- * @author h-suyama
+ * @author s-moro
  * @version 1.0.0
  */
 @Controller
